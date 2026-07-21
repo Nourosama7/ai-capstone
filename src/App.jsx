@@ -1,96 +1,88 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-export default function App() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+const schema = z
+  .object({
+    fullName: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.string().email("Enter a valid email"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
   });
 
-  const [errors, setErrors] = useState({});
+export default function App() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm({
+    resolver: zodResolver(schema),
+    mode: "onChange",
+  });
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const newErrors = {};
-
-    if (form.name.trim() === "") {
-      newErrors.name = "Name is required";
-    }
-
-    if (!form.email.includes("@")) {
-      newErrors.email = "Invalid email";
-    }
-
-    if (form.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
-    }
-
-    if (form.password !== form.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      alert("Settings Saved!");
-    }
+  const onSubmit = (data) => {
+    alert("Settings Saved!");
+    console.log(data);
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "40px auto" }}>
+    <div
+      style={{
+        maxWidth: "450px",
+        margin: "40px auto",
+        padding: "20px",
+        border: "1px solid #ddd",
+        borderRadius: "10px",
+      }}
+    >
       <h1>Settings Form</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={form.name}
-          onChange={handleChange}
-        />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>Full Name</label>
         <br />
-        {errors.name && <p>{errors.name}</p>}
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-        />
+        <input {...register("fullName")} />
         <br />
-        {errors.email && <p>{errors.email}</p>}
+        <span style={{ color: "red" }}>{errors.fullName?.message}</span>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-        />
         <br />
-        {errors.password && <p>{errors.password}</p>}
-
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={form.confirmPassword}
-          onChange={handleChange}
-        />
         <br />
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
 
-        <button type="submit">Save Settings</button>
+        <label>Email</label>
+        <br />
+        <input type="email" {...register("email")} />
+        <br />
+        <span style={{ color: "red" }}>{errors.email?.message}</span>
+
+        <br />
+        <br />
+
+        <label>Password</label>
+        <br />
+        <input type="password" {...register("password")} />
+        <br />
+        <span style={{ color: "red" }}>{errors.password?.message}</span>
+
+        <br />
+        <br />
+
+        <label>Confirm Password</label>
+        <br />
+        <input type="password" {...register("confirmPassword")} />
+        <br />
+        <span style={{ color: "red" }}>
+          {errors.confirmPassword?.message}
+        </span>
+
+        <br />
+        <br />
+
+        <button disabled={!isValid || isSubmitting}>
+          {isSubmitting ? "Saving..." : "Save Settings"}
+        </button>
       </form>
     </div>
   );
