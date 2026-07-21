@@ -1,31 +1,16 @@
-# AI Capstone
+# React + Vite
 
-This repository contains my capstone project for the AI-assisted development track.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Project Overview
+Currently, two official plugins are available:
 
-**Working title:** AI Capstone Project
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-**Problem:** Building software efficiently while learning how to use AI tools during development.
+## React Compiler
 
-**Solution:** Create a project using AI-assisted development practices, including planning, coding, and documentation.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-**Planned deliverables:**
-- [ ] Working application (Node.js)
-- [ ] Git history with Conventional Commits
-- [ ] Documentation of AI-assisted workflow
+## Expanding the ESLint configuration
 
-## Tech Stack
-
-- Node.js
-- Git
-- VS Code
-- Cursor
-
-## Goal
-
-Learn AI-assisted software development and build projects using modern development workflows.
-
-## Author
-
-Nour Osama
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
