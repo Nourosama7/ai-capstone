@@ -1,14 +1,16 @@
-# Claude Instructions
+# Project Rules
 
-## Stack
+## Rule 1
+Always use react-hook-form for forms.
 
-- Node.js
-- Git
-- VS Code
+## Rule 2
+Always validate forms using Zod.
 
-## Rules
+## Rule 3
+Every form must display validation messages.
 
-- Follow Conventional Commits.
-- Write clean and readable code.
-- Explain changes clearly.
-- Use AI assistant to review changes before committing.
+## Rule 4
+Disable submit buttons until the form is valid.
+
+## Rule 5
+Review accessibility before finishing implementation.
